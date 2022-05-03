@@ -1,0 +1,20 @@
+<div class="">
+  <h1 class="text-dark">Edit Genres</h1>
+  <form action="/genres/edit/<%= genre._id %> " method="post">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        name="name"
+        placeholder="genre name"
+        class="form-control"
+        value="<%= genre.name %> "
+      />
+    </div>
+
+    <button type="submit" class="btn btn-secondary text-light mt-2">
+      Submit
+    </button>
+    <a href="/genres" class="btn btn-danger mt-2">Close</a>
+  </form>
+</div>

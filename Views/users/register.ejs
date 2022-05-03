@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>register</title>
+  </head>
+  <body>
+    <header><%- include('../partials/header'); %></header>
+
+    <div class="container register">
+      <div class="row">
+        <div class="col-6 offset-3 mt-4">
+          <h1 class="text-dark">Register</h1>
+          <% if (typeof errors == 'object' && errors) for( let i = 0; i <
+          errors.length; i++ ) { %>
+          <div class="alert alert-danger"><%= errors[i].msg %></div>
+          <% } %> <% if (typeof error == 'string') { %>
+          <div class="alert alert-danger"><%= error %></div>
+          <% } %>
+          <form action="/user/register" method="post">
+            <div class="mb-3">
+              <label for="firstname" class="form-label">First Name</label>
+              <input type="text" class="form-control" name="firstname" />
+            </div>
+            <div class="mb-3">
+              <label for="lastname" class="form-label">Last Name</label>
+              <input type="text" class="form-control" name="lastname" />
+            </div>
+            <div class="mb-3">
+              <label for="Email" class="form-label">Email</label>
+              <input type="email" class="form-control" name="email" />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" name="password" />
+            </div>
+            <div class="mb-3">
+              <label for="confirm_password" class="form-label"
+                >Confirm Password</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                name="confirm_password"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- footer section -->
+    <footer>
+      <p class="text-center text-dark">
+        Albumz &copy; 2021, All Right Reserved
+      </p>
+    </footer>
+    <!-- js setups -->
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

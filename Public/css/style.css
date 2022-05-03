@@ -1,0 +1,38 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  background-color: rgb(155, 108, 115);
+}
+
+.list-group-item-dark {
+  background-color: rgb(85, 76, 76) !important;
+}
+.list-group-item-dark a {
+  text-decoration: none;
+  color: white;
+}
+
+/* .btn-secondary {
+  background-color: rgb(129, 126, 126) !important;
+} */
+
+/* .container {
+} */
+
+.register {
+  min-height: 100vh;
+}
+
+main {
+  min-height: 80vh;
+}
+
+.active {
+  background-color: #666;
+  color: rgb(219, 67, 67) !important;
+}

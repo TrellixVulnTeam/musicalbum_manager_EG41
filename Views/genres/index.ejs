@@ -1,0 +1,33 @@
+<div class="">
+  <h1 class="text-dark">
+    Genres
+    <a href="genres/add" class="btn btn-success ms-auto">Add Genres</a>
+  </h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">#</th>
+        <th scope="col">#</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for( let i = 0; i < genre.length; i++ ) { %>
+      <tr>
+        <td><%= genre[i].name %></td>
+        <td>
+          <a class="btn btn-secondary" href="/genres/edit/<%= genre[i]._id %> "
+            >Edit</a
+          >
+        </td>
+        <td>
+          <a class="btn btn-danger" href="/genres/delete/<%= genre[i]._id %>"
+            >Delete</a
+          >
+        </td>
+      </tr>
+
+      <% } %>
+    </tbody>
+  </table>
+</div>
