@@ -9,13 +9,11 @@
     <title>register</title>
   </head>
   <body>
-    <header><%- include('../partials/header'); %></header>
-
     <div class="container register">
       <div class="row">
         <div class="col-6 offset-3 mt-4">
           <h1 class="text-dark">Member login</h1>
-          <form action="/user/login" method="post">
+          <form action="/auth/login" method="post">
             <div class="mb-3">
               <label for="Email" class="form-label">Email</label>
               <input type="email" class="form-control" name="email" />
@@ -26,16 +24,14 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
+          <div>
+          <p>Do not have an account yet? <a href='/auth/register'>Sign up</a></p>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- footer section -->
-    <footer>
-      <p class="text-center text-dark">
-        Albumz &copy; 2021, All Right Reserved
-      </p>
-    </footer>
+ 
     <!-- js setups -->
 
     <script src="/js/bootstrap.bundle.min.js"></script>
