@@ -1,7 +1,8 @@
 const express = require("express");
 const passport = require("passport");
-var LocalStrategy = require('passport-local');
-var crypto = require('crypto');
+const LocalStrategy = require('passport-local');
+const crypto = require('crypto');
+const CryptoJS = require("crypto-js"); 
 const { check, validationResult } = require("express-validator");
 const User = require("../model/userModel");
 
@@ -27,6 +28,19 @@ passport.use(new LocalStrategy(function verify(email, password, cb) {
 }));
 
 
+passport.serializeUser(function(user, cb) {
+  process.nextTick(function() {
+    cb(null, { id: user.id, email: user.email });
+  });
+});
+
+passport.deserializeUser(function(user, cb) {
+  process.nextTick(function() {
+    return cb(null, user);
+  });
+});
+
+
 // register
 authRouter
   .route("/register")
@@ -49,6 +63,9 @@ authRouter
             password: hashedPassword,
             confirm_password,
           });
+        //res.send('hh')
+        //console.log(user)
+          
      user.save((err) => {
      	if (err) { return next(err);}
      	
@@ -57,9 +74,7 @@ authRouter
         res.redirect('/');
         console.log(user)
       });
-     })
-    
- 
+     })   
   });
 });
 
@@ -73,7 +88,7 @@ authRouter
   .post(
     passport.authenticate("local", {
       successRedirect: '/',
-      failureRedirect: "/user/login",
+      failureRedirect: "/auth/login",
       failureFlash: "Invalid Email or password",
     }),
     

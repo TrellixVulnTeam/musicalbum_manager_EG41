@@ -3,6 +3,7 @@ const path = require("path");
 const morgan = require("morgan");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+const SQLiteStore = require('connect-sqlite3')(session)
 const flash = require("connect-flash");
 const expressLayout = require("express-ejs-layouts");
 const mongoose = require("mongoose");
@@ -50,10 +51,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser("keyboard cat"));
 app.use(
   session({
+  	store: new SQLiteStore,
     secret: "music",
-    resave: false,
+    resave: true,
     saveUninitialized: true,
-    cookie: { maxAge: null },
+    cookie: { maxAge: null }  
   })
 );
 app.use(flash());
@@ -63,7 +65,7 @@ app.use(function (req, res, next) {
 });
 //app.use(passport.authenticate("session"));
 
-require("./Src/config/passport")(app);
+//require("./Src/config/passport")(app);
 
 //routes setup
 app.use("/", indexRouter);

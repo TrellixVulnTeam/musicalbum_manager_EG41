@@ -6,7 +6,7 @@ body {
   font-size: 16px;
   margin: 0;
   padding: 0;
-  background-color: rgb(155, 108, 115);
+  background-color: #C1B5B5;
 }
 
 .list-group-item-dark {
@@ -28,6 +28,7 @@ body {
   min-height: 100vh;
 }
 
+/* main section */
 main {
   min-height: 80vh;
 }
@@ -35,4 +36,46 @@ main {
 .active {
   background-color: #666;
   color: rgb(219, 67, 67) !important;
+}
+
+/* footer section */
+footer{
+	margin: 0;
+	padding: 0;
+	margin-top: 20px;
+}
+.footer{
+ background-color: black;
+ color: white;
+ display: flex;
+ flex-direction: column;
+ width: 100%;
+}
+.footerItem{
+	margin-left: 20px;
+	margin-bottom: 20px;
+}
+hr {
+	width: 100%;
+	border: 2px solid white;
+}
+.footerLogo {
+	display: flex;
+	margin-top: 20px;
+	align-items: center;
+}
+.footer img{
+	margin-right: 20px;
+	height: 40px;
+	width: 40px;
+}
+.icon{
+	margin-right: 20px;
+}
+h5{
+	margin-bottom: 20px;
+}
+.footer p {
+	text-align: center;
+	font-size
 }
