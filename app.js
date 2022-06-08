@@ -3,19 +3,21 @@ const path = require("path");
 const morgan = require("morgan");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+const SQLiteStore = require('connect-sqlite3')(session)
 const flash = require("connect-flash");
 const expressLayout = require("express-ejs-layouts");
 const mongoose = require("mongoose");
-//const chalk = require("chalk");
+require('dotenv').config()
+const chalk = require("chalk");
 
 const indexRouter = require("./Routes/indexRouter");
 const genreRouter = require("./Routes/genreRouter");
 const albumRouter = require("./Routes/albumRouter");
-const userRouter = require("./Routes/userRouter");
+const authRouter = require("./Routes/authRouter");
 
 //app setups
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT;
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "Public")));
 app.use(
@@ -30,13 +32,13 @@ app.use(
 app.use(expressLayout);
 
 //database setup
-mongoose.connect("mongodb://localhost/music-album", {
+mongoose.connect("mongodb+srv://Ken_apps:Ken_apps@cluster0.npcrm.mongodb.net/music-album?retryWrites=true&w=majority", {
   useUnifiedTopology: true,
   useNewUrlparser: true,
 });
 const db = mongoose.connection;
-db.on("error", () => console.log("error connecting to Music-Album database"));
-db.once("open", () => console.log("connected to Music-Album database"));
+db.on("error", () => console.log("error connecting to Music-Album " + chalk.cyan('database')));
+db.once("open", () => console.log("connected to " + chalk.cyan('Music-Album database')));
 
 //views setup
 app.set("view engine", "ejs");
@@ -49,10 +51,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser("keyboard cat"));
 app.use(
   session({
+  	store: new SQLiteStore,
     secret: "music",
-    resave: false,
+    resave: true,
     saveUninitialized: true,
-    cookie: { maxAge: null },
+    cookie: { maxAge: null }  
   })
 );
 app.use(flash());
@@ -62,12 +65,12 @@ app.use(function (req, res, next) {
 });
 //app.use(passport.authenticate("session"));
 
-require("./Src/config/passport")(app);
+//require("./Src/config/passport")(app);
 
 //routes setup
 app.use("/", indexRouter);
 app.use("/albums", albumRouter);
 app.use("/genres", genreRouter);
-app.use("/user", userRouter);
+app.use("/auth", authRouter);
 
-app.listen(port, () => console.log("listening on port 4000"));
+app.listen(port, () => console.log("listening on port " + chalk.cyan(4000)));
