@@ -79,3 +79,7 @@ h5{
 	text-align: center;
 	font-size
 }
+.footer a{
+	text-decoration: none;
+	color: inherit;
+}

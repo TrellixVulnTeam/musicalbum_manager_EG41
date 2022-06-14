@@ -3,11 +3,11 @@ const path = require("path");
 const morgan = require("morgan");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
-const SQLiteStore = require("connect-sqlite3")(session);
+//const SQLiteStore = require('connect-sqlite3')(session)
 const flash = require("connect-flash");
 const expressLayout = require("express-ejs-layouts");
 const mongoose = require("mongoose");
-require("dotenv").config();
+require('dotenv').config()
 const chalk = require("chalk");
 
 const indexRouter = require("./Routes/indexRouter");
@@ -32,20 +32,13 @@ app.use(
 app.use(expressLayout);
 
 //database setup
-mongoose.connect(
-  "mongodb+srv://Ken_apps:Ken_apps@cluster0.npcrm.mongodb.net/music-album?retryWrites=true&w=majority",
-  {
-    useUnifiedTopology: true,
-    useNewUrlparser: true,
-  }
-);
+mongoose.connect("mongodb+srv://Ken_apps:Ken_apps@cluster0.npcrm.mongodb.net/music-album?retryWrites=true&w=majority", {
+  useUnifiedTopology: true,
+  useNewUrlparser: true,
+});
 const db = mongoose.connection;
-db.on("error", () =>
-  console.log("error connecting to Music-Album " + chalk.cyan("database"))
-);
-db.once("open", () =>
-  console.log("connected to " + chalk.cyan("Music-Album database"))
-);
+db.on("error", () => console.log("error connecting to Music-Album " + chalk.cyan('database')));
+db.once("open", () => console.log("connected to " + chalk.cyan('Music-Album database')));
 
 //views setup
 app.set("view engine", "ejs");
@@ -58,11 +51,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser("keyboard cat"));
 app.use(
   session({
-    store: new SQLiteStore(),
+  	// store: new SQLiteStore,
     secret: "music",
     resave: true,
     saveUninitialized: true,
-    cookie: { maxAge: null },
+    cookie: { maxAge: null }  
   })
 );
 app.use(flash());
