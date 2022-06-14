@@ -1,21 +1,22 @@
 const express = require("express");
-const formidable = require("formidable");
-const fs = require("fs");
-const path = require("path");
 const Genre = require("../model/genreModel");
 const Album = require("../model/albumModel");
+//const {upload} = require("../Src/uploads")
+
 
 const albumRouter = express();
 
+//get all album
 albumRouter.get("/", (req, res, next) => {
   Album.find({}, (err, albums) => {
     if (err) {
-      res.status(400).json({ error: "error finding ablums" });
+      res.status(400).json({msg: "error finding ablums" });
     }
-    res.render("albums/index", { albums });
+    res.render("albums/index", {albums});
   });
 });
 
+//find album update page
 albumRouter.get("/add", (req, res, next) => {
   Genre.find({}, (err, genre) => {
     if (err) {
@@ -25,89 +26,63 @@ albumRouter.get("/add", (req, res, next) => {
   });
 });
 
-albumRouter.post("/add", (req, res, next) => {
-  const form = new formidable.IncomingForm({
-    keepExtensions: true,
-    uploadPath: `${__dirname}/../uploads`,
-  });
-
-  form.parse(req, (err, fields, files) => {
-    if (err) {
-      next(err);
-      return;
-    }
-    let album = new Album(fields);
-    if (files.cover) {
-      // album.cover.data = fs.readFileSync(files.cover.path);
-      album.cover = files.cover.type;
-    }
-    console.log(album);
+//create album
+albumRouter.post("/add", (req, res) => {
+	const { name, artist, title, genre, info, year, label, tracks} = req.body
+	const cover = req.file.location
+	
+  let album = new Album({name, artist, title, genre, info, year, label, tracks, cover});
+    
     album.save((err, data) => {
       if (err) {
-        res.status(400).json({ error: "error saving data to database" });
+        res.status(500).json({ error: "error saving data to database" });
       }
       req.flash("success", "album successfully saved");
       res.redirect("/albums");
     });
   });
-});
+
 
 //get single album
-
 albumRouter.get("/detail/:id", (req, res) => {
   Album.findOne({ id: req.params.id }, (err, album) => {
     if (err) {
-      res.status(400).json({ err: "album not found" });
+      res.status(500).json({msg: "album not found"});
     }
     res.render("albums/detail", { album });
   });
 });
 
-//middleware
+//update album
 albumRouter.get("/edit/:id", (req, res) => {
   Album.findById(req.params.id, (err, album) => {
     Genre.find({}, (err, genre) => {
       if (err) {
-        res.status(400).json({ error: "album do not exist" });
+        res.status(500).json({ msg: "album do not exist" });
       }
       res.render("albums/edit", { album, genre });
     });
   });
 });
 
-//update call
 
 albumRouter.route("/edit/:id").post((req, res) => {
-  const form = new formidable.IncomingForm({
-    keepExtensions: true,
-    uploadPath: `${__dirname}/../uploads`,
-  });
-
-  form.parse(req, (err, fields, files) => {
-    if (err) {
-      next(err);
-      return;
-    }
-    let album = new Album(fields);
-    //let cover = files.cover;
-    if (files.cover) {
-      album.cover.data = fs.readFileSync(files.cover.path);
-      album.cover.contentType = files.cover.type;
-    }
-    const { name, artist, title, genre, info, year, label, tracks } = fields;
-    console.log(fields.name);
+  
+    const { name, artist, title, genre, info, year, label, tracks} = req.body
+    const cover = req.file.location
+    
     Album.findByIdAndUpdate(
       req.params.id,
-      { name, artist, title, genre, info, year, label, tracks },
+      { name, artist, title, genre, info, year, label, tracks, cover },
       (err, data) => {
         if (err) {
-          res.status(400).json({ error: "error updating data to database" });
+          res.status(500).json({msg: "error updating music data" });
         }
         res.redirect("/albums");
       }
     );
   });
-});
+
 
 // delete call
 albumRouter.get("/delete/:id", (req, res) => {

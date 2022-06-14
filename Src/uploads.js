@@ -8,7 +8,7 @@ const s3 = new AWS.S3({
     secretAccessKey: process.env.SECRET_ACCESS_KEY
 });
 
-const upload = multer({
+exports.upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: process.env.BUCKET_NAME,
@@ -22,4 +22,4 @@ const upload = multer({
   })
 })
 
-module.exports = {upload}
+//module.exports = {upload}

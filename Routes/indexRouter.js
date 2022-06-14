@@ -1,10 +1,15 @@
 const express = require("express");
-const nodemailer = require("nodemailer");
+const Album = require("../model/albumModel")
 
 const indexRouter = express();
 
 indexRouter.get("/", (req, res) => {
-  res.render("albums/index");
+	Album.find({}, (err, albums) => {
+		if(err) {
+			res.status(500).json({msg: err})
+		}res.render("albums/index", {albums});		
+	})
+  
 });
 
 indexRouter.get("/about", (req, res) => {
