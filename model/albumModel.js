@@ -12,6 +12,6 @@ const albumSchema = new Schema({
   label: { type: String },
   tracks: { type: Number },
   cover: { type: String },
-});
+}, {timestamps: true});
 
 module.exports = mongoose.model("Album", albumSchema);

@@ -1,7 +1,7 @@
 const express = require("express");
 const Album = require("../model/albumModel");
-// const multers3 = require("multer-s3");
-// const aws = require("aws-sdk");
+const multers3 = require("multer-s3");
+const aws = require("aws-sdk");
 
 const indexRouter = express();
 

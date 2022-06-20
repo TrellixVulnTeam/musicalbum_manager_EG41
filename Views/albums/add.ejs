@@ -1,5 +1,4 @@
 <div class="">
-  <div><%- messages() %></div>
   <h1 class="text-dark">Add Album</h1>
   <form action="/albums/add" method="post" enctype="multipart/form-data">
     <div class="form-group">
@@ -36,6 +35,7 @@
             <% for( let i = 0; i <genre.length; i++ ) { %>
             <option value='<%= genre[i].name %>'><%= genre[i].name %></option>
             <% } %>
+            <i class="fa-solid fa-square-down"></i>
         </select>
       </div>
       <div class="form-group">

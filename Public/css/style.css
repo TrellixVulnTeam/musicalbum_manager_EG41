@@ -17,6 +17,12 @@ body {
   color: white;
 }
 
+h4 ul{
+	list-style-type: none;
+	}
+h4 ul li{
+	color: green;
+}
 /* .btn-secondary {
   background-color: rgb(129, 126, 126) !important;
 } */
