@@ -6,7 +6,13 @@ const aws = require("aws-sdk");
 const indexRouter = express();
 
 indexRouter.get("/", (req, res) => {
-  res.render("albums/index", {});
+	Album.find({}, (err, albums) => {
+    if (err) {
+      res.status(400).json({msg: "error finding ablums" });
+    }
+    res.render("albums/index", {albums});
+  });
+  
 });
 
 indexRouter.get("/about", (req, res) => {

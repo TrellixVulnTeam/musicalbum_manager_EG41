@@ -1,8 +1,7 @@
 const express = require("express");
 const Genre = require("../model/genreModel");
 const Album = require("../model/albumModel");
-//const {upload} = require("../Src/uploads")
-
+const {upload} = require("../Src/uploads")
 
 const albumRouter = express();
 
@@ -27,7 +26,7 @@ albumRouter.get("/add", (req, res, next) => {
 });
 
 //create album
-albumRouter.post("/add", (req, res) => {
+albumRouter.post("/add", upload.single('cover'), (req, res) => {
 	const { name, artist, title, genre, info, year, label, tracks} = req.body
 	const cover = req.file.location
 	
