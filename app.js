@@ -7,13 +7,12 @@ const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
 const expressLayout = require("express-ejs-layouts");
 const mongoose = require("mongoose");
-require("dotenv").config();
 const chalk = require("chalk");
-
 const indexRouter = require("./Routes/indexRouter");
 const genreRouter = require("./Routes/genreRouter");
 const albumRouter = require("./Routes/albumRouter");
 const authRouter = require("./Routes/authRouter");
+require("dotenv").config();
 
 //app setups
 const app = express();
@@ -32,14 +31,14 @@ app.use(
 app.use(expressLayout);
 
 //database setup
- /*mongoose.connect("mongodb+srv://Ken_apps:Ken_apps@cluster0.npcrm.mongodb.net/music-album?retryWrites=true&w=majority", {
+ mongoose.connect("mongodb+srv://Ken_apps:Ken_apps@cluster0.npcrm.mongodb.net/music-album?retryWrites=true&w=majority", {
   useUnifiedTopology: true,
   useNewUrlparser: true,
- });*/
-mongoose.connect("mongodb://localhost/music-album", {
+ });
+/*mongoose.connect("mongodb://localhost/music-album", {
   useUnifiedTopology: true,
   useNewUrlparser: true,
-});
+});*/
 
 const db = mongoose.connection;
 db.on("error", () =>

@@ -6,7 +6,7 @@
   <div class="row">
     <% albums.map((album, i) => {%>
     <div class="col-sm-12 col-md-4 album">
-      <a href="/albums/detail/<%= album.id  %> "
+      <a href="/albums/detail/<%= album._id %>"
         ><h3><%= album.artist %></h3>
         <img src="<%= album.cover %>" alt="album cover" />
       </a>

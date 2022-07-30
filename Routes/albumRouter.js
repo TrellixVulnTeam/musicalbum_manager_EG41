@@ -1,7 +1,7 @@
 const express = require("express");
 const Genre = require("../model/genreModel");
 const Album = require("../model/albumModel");
-const {upload} = require("../Src/uploads")
+const {upload} = require("../Src/uploads_cloudinary")
 
 const albumRouter = express();
 
@@ -28,7 +28,8 @@ albumRouter.get("/add", (req, res, next) => {
 //create album
 albumRouter.post("/add", upload.single('cover'), (req, res) => {
 	const { name, artist, title, genre, info, year, label, tracks} = req.body
-	const cover = req.file.location
+	const cover = req.file.path
+	//console.log(cover)
 	
   let album = new Album({name, artist, title, genre, info, year, label, tracks, cover});
     
@@ -41,10 +42,9 @@ albumRouter.post("/add", upload.single('cover'), (req, res) => {
     });
   });
 
-
 //get single album
 albumRouter.get("/detail/:id", (req, res) => {
-  Album.findOne({ id: req.params.id }, (err, album) => {
+  Album.findOne({ _id: req.params.id }, (err, album) => {
     if (err) {
       res.status(500).json({msg: "album not found"});
     }
@@ -65,10 +65,10 @@ albumRouter.get("/edit/:id", (req, res) => {
 });
 
 
-albumRouter.route("/edit/:id").post((req, res) => {
+albumRouter.route("/edit/:id").post(upload.single('cover'),  (req, res) => {
   
     const { name, artist, title, genre, info, year, label, tracks} = req.body
-    const cover = req.file.location
+    const cover = req.file.path
     
     Album.findByIdAndUpdate(
       req.params.id,
